@@ -137,6 +137,8 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             //run the app without startUpdatingLocation. backgroundTimeRemaining decremented from 180.00
+            //[self.locationManager startUpdatingLocation];
+            
             while (TRUE)
             {
                 //backgroundTimeRemaining time does not go down.

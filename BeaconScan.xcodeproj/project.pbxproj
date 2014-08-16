@@ -57,6 +57,7 @@
 		B4488B46199FB781002D683B /* BeaconScanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconScanTests.m; sourceTree = "<group>"; };
 		B4488B50199FB791002D683B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B4488B52199FB798002D683B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B4A544B8199FE2BF006D6ABA /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 		B4488B0F199FB780002D683B = {
 			isa = PBXGroup;
 			children = (
+				B4A544B8199FE2BF006D6ABA /* LICENSE.txt */,
 				B4488B21199FB780002D683B /* BeaconScan */,
 				B4488B40199FB781002D683B /* BeaconScanTests */,
 				B4488B1A199FB780002D683B /* Frameworks */,
@@ -472,6 +474,7 @@
 				B4488B4C199FB781002D683B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B4488B4D199FB781002D683B /* Build configuration list for PBXNativeTarget "BeaconScanTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +483,7 @@
 				B4488B4F199FB781002D683B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
