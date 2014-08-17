@@ -23,6 +23,7 @@
 		B4488B47199FB781002D683B /* BeaconScanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B4488B46199FB781002D683B /* BeaconScanTests.m */; };
 		B4488B51199FB791002D683B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4488B50199FB791002D683B /* AVFoundation.framework */; };
 		B4488B53199FB798002D683B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4488B52199FB798002D683B /* CoreLocation.framework */; };
+		B46D81A019A1324300572CDD /* MPScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B46D819F19A1324300572CDD /* MPScanner.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		B4488B46199FB781002D683B /* BeaconScanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeaconScanTests.m; sourceTree = "<group>"; };
 		B4488B50199FB791002D683B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B4488B52199FB798002D683B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B46D819E19A1324300572CDD /* MPScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPScanner.h; sourceTree = "<group>"; };
+		B46D819F19A1324300572CDD /* MPScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPScanner.m; sourceTree = "<group>"; };
 		B4A544B8199FE2BF006D6ABA /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.md; sourceTree = "<group>"; };
 		B4A544B9199FECB3006D6ABA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,6 +129,8 @@
 			children = (
 				B4488B2A199FB780002D683B /* MPAppDelegate.h */,
 				B4488B2B199FB780002D683B /* MPAppDelegate.m */,
+				B46D819E19A1324300572CDD /* MPScanner.h */,
+				B46D819F19A1324300572CDD /* MPScanner.m */,
 				B4488B2D199FB780002D683B /* Main.storyboard */,
 				B4488B30199FB780002D683B /* MPViewController.h */,
 				B4488B31199FB780002D683B /* MPViewController.m */,
@@ -270,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4488B28199FB780002D683B /* main.m in Sources */,
+				B46D81A019A1324300572CDD /* MPScanner.m in Sources */,
 				B4488B32199FB780002D683B /* MPViewController.m in Sources */,
 				B4488B2C199FB780002D683B /* MPAppDelegate.m in Sources */,
 			);
