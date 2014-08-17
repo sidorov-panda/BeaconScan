@@ -15,6 +15,7 @@
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) AVAudioSession *audioSession;
 @property (nonatomic, strong) AVSpeechSynthesizer *synthe;
+@property (nonatomic) BOOL canLoop;
 
 @end
 
@@ -82,6 +83,7 @@
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
         
+        self.canLoop = NO;
         NSLog(@"exit region");
         [self speakMessageWithString:@"Au revoir"];
         [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
@@ -122,6 +124,7 @@
     NSLog(@"determined state: %d", state);
     
     if (state == CLRegionStateInside) {
+        self.canLoop = YES;
         [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
         
         // request extra running time in background for ranging
@@ -129,22 +132,24 @@
         UIApplication *application = [UIApplication sharedApplication];
         
         background_task = [application beginBackgroundTaskWithExpirationHandler:^ {
+            NSLog(@"cleanup code for end of background allowed running time");
             [application endBackgroundTask: background_task];
             background_task = UIBackgroundTaskInvalid;
             
         }];
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            //run the app without startUpdatingLocation. backgroundTimeRemaining decremented from 180.00
-            //[self.locationManager startUpdatingLocation];
-            
-            while (TRUE)
+            while (self.canLoop)
             {
-                //backgroundTimeRemaining time does not go down.
+                NSTimeInterval remaining = [[UIApplication sharedApplication] backgroundTimeRemaining];
+                //get extra time
+                if (remaining < 150) {
+                    [self speakMessageWithString:@"en approche"];
+                }
                 [NSThread sleepForTimeInterval:1]; //wait for 1 sec
             }
             
+            NSLog(@"end of loop");
             [application endBackgroundTask: background_task];
             background_task = UIBackgroundTaskInvalid;
         });
@@ -168,7 +173,7 @@
         NSTimeInterval remaining = [[UIApplication sharedApplication] backgroundTimeRemaining];
         NSLog(@"time %f #%lu delta %ld",(remaining < 10000)?remaining:10000, (unsigned long)beacons.count, front - back);
         
-        [self speakMessageWithString:[NSString stringWithFormat:@"%lu %ld",(unsigned long)beacons.count, front-back]];
+        //[self speakMessageWithString:[NSString stringWithFormat:@"%lu %ld",(unsigned long)beacons.count, front-back]];
     }
     
 }
@@ -177,6 +182,7 @@
 
 - (void)speakMessageWithString:(NSString *)string
 {
+    
     NSError *error = nil;
     [self.audioSession setActive:YES error:&error];
     
