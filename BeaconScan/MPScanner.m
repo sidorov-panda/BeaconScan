@@ -18,7 +18,6 @@
 @property (nonatomic) BOOL canLoop;
 @property (nonatomic) BOOL canConnect;
 
-
 @end
 
 @implementation MPScanner
@@ -41,7 +40,6 @@
         
         self.synthe = [[AVSpeechSynthesizer alloc] init];
         [self.synthe setDelegate:self];
-        
     }
     return self;
 }
@@ -65,7 +63,6 @@
     
     NSError *error = nil;
     [self.audioSession setActive:NO error:&error];
-    
 }
 
 
@@ -74,7 +71,6 @@
 - (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
 {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        
         NSLog(@"enter region");
         [self speakMessageWithString:@"Bienvenue"];
     }
@@ -82,14 +78,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
     if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        
         self.canLoop = NO;
         self.canConnect = NO;
         NSLog(@"exit region");
         [self speakMessageWithString:@"Au revoir"];
         
         [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
-        
         [self.locationManager stopMonitoringForRegion:region];
         [self.locationManager startMonitoringForRegion:region];
     }
@@ -156,14 +150,15 @@
             background_task = UIBackgroundTaskInvalid;
         }];
         
+        // run background loop in a separate process
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSLog(@"start of background loop");
             while (self.canLoop)
             {
                 NSTimeInterval remaining = [[UIApplication sharedApplication] backgroundTimeRemaining];
-                //get extra time
+                // background audio resets remaining time
                 if (remaining < 150) {
-                    [self speakMessageWithString:@"en approche"];
+                    [self speakMessageWithString:@"toujours en approche"];
                 }
                 [NSThread sleepForTimeInterval:1]; //wait for 1 sec
             }
@@ -180,8 +175,7 @@
     CLBeacon *beacon;
     
     unsigned int count = 0;
-    int maxval = -128;
-    
+    long maxval = -128;
     
     for (beacon in beacons) {
         if ([beacon.minor isEqual: @1]) back = beacon.rssi;
@@ -196,22 +190,24 @@
     if (count >0)
     {
         NSTimeInterval remaining = [[UIApplication sharedApplication] backgroundTimeRemaining];
-        NSLog(@"time %f #%lu max %d delta %ld",(remaining < 10000)?remaining:10000, (unsigned long)count, maxval, front - back);
+        NSLog(@"time %f #%lu max %ld delta %ld",(remaining < 10000)?remaining:10000, (unsigned long)count, maxval, front - back);
     }
     
     if (count == 2 && (front-back) >=self.delta && self.canConnect && maxval > self.threshold) {
         [self speakMessageWithString:@"Connection"];
+        
+        // suspend connectability during connection
         self.canConnect = NO;
+        
+        // callback for aborted connection
         NSBlockOperation *revertOperation = [NSBlockOperation blockOperationWithBlock:^{
             [self speakMessageWithString:@"connection annulée"];
-            self.canConnect = YES;
-            
-        }];
+            self.canConnect = YES; }];
+        
         NSDictionary *userInfoDict = @{@"beacons" : beacons,
                                        @"revert" : revertOperation};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"iBeaconConnectable" object:self userInfo:userInfoDict];
     }
-    
 }
 
 #pragma mark - AVSpeechSynthesizer & AVSpeechSynthesizerDelegate methods
