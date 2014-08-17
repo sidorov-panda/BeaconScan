@@ -6,7 +6,11 @@ This application demonstrate some features of iBeacon scanning :
 * detect if we enter or exit a `CLBeaconRegion`
 * continuous ranging of multiple iBeacons sharing the same proximity UUID
 
-These feature work in foreground **and in background** mode of the application.
+These features work in foreground **and in background** mode of the application.
+
+## Background mode
+
+The application demonstrates how to request extra background running time before the app is suspended by the system. The remaining time countdown can be reset in background by running specific tasks, if such tasks are checked in the "Background modes" Xcode capabilities of the target. Here, we use some Speech Synthesizer methodes, encapsulated in AVAudioSessions, with Audio and Play capabilities allowed in background mode.
 
 # LICENSE
 
